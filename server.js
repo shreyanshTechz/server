@@ -1,18 +1,18 @@
-const http = require("http");
-const app = require("express")();
-app.get("/", (req,res)=> res.sendFile(__dirname + "/index.html"))
 
-app.listen(9091, ()=>console.log("Listening on http port 9091"))
-const websocketServer = require("websocket").server
-const httpServer = http.createServer();
-httpServer.listen(9090, () => console.log("Listening.. on 9090"))
+const WebSocket = require('ws');
+// app.get("/", (req,res)=> res.sendFile(__dirname + "/index.html"))
+
+// app.listen(9091, ()=>console.log("Listening on http port 9091"))
+// const websocketServer = require("websocket").server
+// const httpServer = http.createServer();
+// httpServer.listen(9090, () => console.log("Listening.. on 9090"))
 //hashmap clients
 const clients = {};
 const games = {};
 
-const wsServer = new websocketServer({
-    "httpServer": httpServer
-})
+const wsServer = new WebSocket.Server({
+    port: 5000
+});
 wsServer.on("request", request => {
     //connect
     const connection = request.accept(null, request.origin);
@@ -127,3 +127,4 @@ function S4() {
 // then to call it, plus stitch in '4' in the third group
 const guid = () => (S4() + S4() + "-" + S4() + "-4" + S4().substr(0,3) + "-" + S4() + "-" + S4() + S4() + S4()).toLowerCase();
  
+
